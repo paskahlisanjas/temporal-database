@@ -1,39 +1,53 @@
 # Temporal Database
 
+(Currently tested only on Ubuntu 16.04)
+
 ## Pre-installation
 
-The dependencies bellow should already be installed in the system:
+The program needs PostgreSQL to run appropriately. Follow instructions bellow to install PostgreSQL.
 
-1. PostgreSQL
-
-  Follow [these instructions](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04) for more detailed installation.
+```
+$ sudo apt-get update
+$ sudo apt-get install postgresql
+```
 
 ## Installation
 
-(Currently tested only on Ubuntu 16.04)
-
 1. Clone the repository
   ```
-  git clone git@github.com:paskahlisanjas/temporal-databse.git
+  $ git clone git@github.com:paskahlisanjas/temporal-databse.git
   ```
 2. Change directory `cd temporal-database`
 
 3. <b>(optional)</b> Consider creating virtual environment to localize the development environment
   ```
-  pip3 install virtualenv --user
-  python3 -m virtualenv env
+  $ pip3 install virtualenv --user
+  $ python3 -m virtualenv env
   ```
   activate the `virtualenv` by typing `source env/bin/activate`, and deactivate it with `deactivate` command.
 
-4. Change directory to django main project `cd temporaldb`
-
-5. Install all the dependencies
+4. Install all the dependencies
   ```
-  pip install -r requirements.txt
+  $ pip install -r requirements.txt
   ```
 
-6. Run django server
+5. Run flask server
   ```
-  python manage.py runserver
+  $ FLASK_APP=app.py FLASK_DEBUG=1 flask run
   ```
-  server is now by default available on `http://localhost:8000`.
+  server is now by default available on `http://localhost:5000`.
+
+To be able to simulate the cases, the database created should be populated first.
+
+1. Login, create database, and create user
+  ```
+  $ sudo -u postgres psql
+  postgres=# CREATE DATABASE temporal_db;
+  postgres=# CREATE USER someone WITH ENCRYPTED PASSWORD 'password';
+  postgres=# GRANT ALL PRIVILEGES ON DATABASE temporal_db TO someone;
+
+  ```
+2. Populate database
+  ```
+  $ cd db_manager && python populate_db.py
+  ```
