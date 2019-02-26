@@ -1,4 +1,4 @@
-from models import UpdateForm
+from models import UpdateForm, UnionForm
 from flask import Flask
 from flask import render_template, flash, redirect, url_for
 from db_manager.db_manager import Database
@@ -32,4 +32,9 @@ def update():
   if querry.validate_on_submit():
     db.execute_sql('{}'.format(querry.update.data))
     flash('{}'.format(querry.update.data))
-    return render_template('update.html', salary = salary, querry = querry)       
+    return render_template('update.html', salary = salary, querry = querry)
+
+@app.route('/union', methods=['GET'])
+def union():
+  union = UnionForm()
+       
