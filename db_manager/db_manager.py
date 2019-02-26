@@ -1,5 +1,5 @@
 import psycopg2
-from config import *
+from db_manager.config import *
 
 class Database:
     def __init__(self):
@@ -18,7 +18,7 @@ class Database:
         self.cursor.execute(query)
         self.database.commit()
 
-    def fetch_all(arg):
+    def fetch_all(self):
         return self.cursor.fetchall()
 
     def close(self):
