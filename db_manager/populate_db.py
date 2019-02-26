@@ -11,11 +11,11 @@ COLUMNS_DELIMITER = ', '
 SALARY_TABLE = 'salary'
 TITLE_TABLE = 'title'
 
-CREATE_TABLE_SALARY = 'CREATE TABLE IF NOT EXISTS %s (id SERIAL PRIMARY KEY,  name VARCHAR (6), salary INTEGER, start DATE, finish DATE);' % SALARY_TABLE
-CREATE_TABLE_TITLE = 'CREATE TABLE IF NOT EXISTS %s (id SERIAL PRIMARY KEY,  name VARCHAR (6), title VARCHAR (3), start DATE, finish DATE);' % TITLE_TABLE
+CREATE_TABLE_SALARY = 'CREATE TABLE IF NOT EXISTS %s (id SERIAL PRIMARY KEY,  name VARCHAR (6), salary INTEGER, start DATE, finish DATE, current BOOLEAN);' % SALARY_TABLE
+CREATE_TABLE_TITLE = 'CREATE TABLE IF NOT EXISTS %s (id SERIAL PRIMARY KEY,  name VARCHAR (6), title VARCHAR (3), start DATE, finish DATE, current BOOLEAN);' % TITLE_TABLE
 
-SALARY_COLUMNS = ['name', 'salary', 'start', 'finish']
-TITLE_COLUMNS = ['name', 'title', 'start', 'finish']
+SALARY_COLUMNS = ['name', 'salary', 'start', 'finish', 'current']
+TITLE_COLUMNS = ['name', 'title', 'start', 'finish', 'current']
 
 def insert_csv(dir, table):
     with open(dir, newline='') as file:
