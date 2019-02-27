@@ -82,7 +82,7 @@ def union():
 
   return 'jsonify(salaries)'
 
-@app.route('/before', methods=['POST','GET'])
+@app.route('/before', methods=['POST'])
 def before():
   data = request.get_json()
   input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
