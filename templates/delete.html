@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Delete</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <table border="1">
+      <tr>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Start</th>
+        <th>End</th>
+      </tr>
+      {% for salary in salaries %}
+      <tr>
+        <td>{{ salary[1] }}</td>
+        <td>{{ salary[2] }}</td>
+        <td>{{ salary[3] }}</td>
+        <td>{{ salary[4] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <table border="1">
+      <tr>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Start</th>
+        <th>End</th>
+      </tr>
+      {% for title in titles %}
+      <tr>
+        <td>{{ title[1] }}</td>
+        <td>{{ title[2] }}</td>
+        <td>{{ title[3] }}</td>
+        <td>{{ title[4] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h1>Delete</h1>
+    <hr>
+    <form action={{ url_for('delete') }}, method="POST">
+      <div>
+        <label>Table:</label>
+        <select name='table' id='table-select'>
+          <option value="-">-</option>
+          <option value="salary">salary</option>
+          <option value="title">title</option>
+        </select>
+      </div>
+      <hr>
+      <div id='salary-form'>
+        <select name='attr' id='salary-attr'>
+          <option value="salary">salary</option>
+          <option value="name">name</option>
+        </select>
+        <select name='opr' id='name-opr'>
+          <option value="=">=</option>
+          <option value="LIKE">LIKE</option>
+        </select>
+        <select name='opr' id='salary-opr'>
+          <option value="=">=</option>
+          <option value="<"><</option>
+          <option value="<="><=</option>
+          <option value=">">></option>
+          <option value=">=">>=</option>
+        </select>
+        <input type='text' name='val'></input>
+      </div>
+      <div id='title-form'>
+        <select name='attr'>
+          <option value="title">title</option>
+          <option value="name">name</option>
+        </select>
+        <select name='opr'>
+          <option value="=">=</option>
+          <option value="LIKE">LIKE</option>
+        </select>
+        <input type='text' name='val'></input>
+      </div>
+      <div>
+        <select name='cond' id='cond-select'>
+          <option value="-">-</option>
+          <option value="OR">OR</option>
+          <option value="AND">AND</option>
+        </select>
+      </div>
+      <hr>
+      <input type='submit'></input>
+    </form>
+  </body>
+  <script>
+    $('#salary-form, #title-form, #cond-select, #name-opr').hide();
+    $('#table-select').change(
+      function(val) {
+        $('#salary-form, #title-form, #cond-select').hide();
+        var selected = this.value;
+        if (selected == '-') return;
+        $('#' + selected + '-form, #cond-select').show();
+      }
+    );
+    $('#salary-attr').change(
+      function() {
+        $('#salary-opr, #name-opr').hide();
+        var selected = this.value;
+        $('#' + selected + '-opr').show();
+      }
+    );
+  </script>
+</html>
