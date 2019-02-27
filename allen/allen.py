@@ -28,6 +28,28 @@ def is_equals(x,y):
         and x.finish == y.finish
     )
 
+def is_during(x,y):
+  return (x.start >= y.start
+        and x.start < x.finish
+        and x.finish > y.start
+        and x.finish <= y.finish
+    )
+
+def is_contains(x,y):
+    return is_during(y,x)
+  )
+
+def is_starts(x,y):
+  return (x.start == y.start
+        and x.start < x.finish
+        and x.finish > y.start
+        and x.finish < y.finish
+  )
+
+
+def is_started_by(x,y):
+  return is_starts(y,x)
+
 def is_meets(x,y):
     return(x.start < y.start
         and x.start < y.finish
