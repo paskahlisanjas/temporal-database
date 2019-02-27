@@ -60,16 +60,15 @@ def union():
 
   return 'jsonify(salaries)'
 
-@app.route('/before', methods=['POST','GET'])
+@app.route('/before', methods=['POST'])
 def before():
   data = request.get_json()
   input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
   input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
 
   return str(is_before(input0,input1))
-<<<<<<< HEAD
 
-@app.route('/after' methods = ['POST', 'GET'])
+@app.route('/after', methods = ['POST'])
 def after():
     data = request.get_json()
     input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
@@ -77,7 +76,7 @@ def after():
 
     return str(is_after(input0,input1))
 
-@app.route('/equals', methods=['POST', 'GET'])
+@app.route('/equals', methods=['POST'])
 def equals():
     data = request.get_json()
     input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
@@ -85,5 +84,50 @@ def equals():
 
     return str(is_equals(input0,input1))
 
-=======
->>>>>>> 676f9cf8254248c46a1d9a5a4d4bee414e31e5d7
+@app.route('/during', methods=['POST'])
+def during():
+  data = request.get_json()
+  input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+  input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+  return str(is_during(input0,input1))
+
+@app.route('/contains', methods=['POST'])
+def contains():
+  data = request.get_json()
+  input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+  input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+  return str(is_contains(input0,input1))
+
+@app.route('/starts', methods=['POST'])
+def starts():
+  data = request.get_json()
+  input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+  input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+  return str(is_starts(input0,input1))
+
+@app.route('/startby', methods=['POST'])
+def startby():
+  data = request.get_json()
+  input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+  input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+  return str(is_started_by(input0,input1))
+
+@app.route('/finishes', methods=['POST'])
+def finishes():
+  data = request.get_json()
+  input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+  input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+  return str(is_finishes(input0,input1))
+
+@app.route('/finishedby', methods=['POST'])
+def finishedby():
+  data = request.get_json()
+  input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+  input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+  return str(is_finished_by(input0,input1))
