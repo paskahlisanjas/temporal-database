@@ -1,0 +1,24 @@
+{% block content %}
+<br><br>
+<h1>Union Querry</h1>
+<form action="{{url_for('union')}}" method="post" novalidate>
+    {{ union.hidden_tag() }}
+    <p>
+        {{ union.select1.label }}<br>
+        {{ union.select1 }}
+    </p>
+    <p>
+      {{ union.table1.label }}<br>
+      {{ union.table1 }}
+    </p>
+    <p>
+      {{ union.select2.label }}<br>
+      {{ union.select2 }}
+    </p>
+    <p>
+      {{ union.table2.label }}<br>
+      {{ union.table2 }}
+    </p>
+    <p>{{ union.submit() }}</p>
+</form>
+{% endblock %}
