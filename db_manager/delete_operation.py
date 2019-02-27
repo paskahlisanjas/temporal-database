@@ -1,6 +1,5 @@
 from db_manager.db_manager import Database
-
-TABLE_NAMES = ['salary', 'title']
+from db_manager.constants import *
 
 db = Database()
 

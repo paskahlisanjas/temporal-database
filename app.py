@@ -3,6 +3,7 @@ from flask import render_template
 from flask import jsonify
 from flask import request
 from db_manager.delete_operation import delete_record
+from db_manager.insert_operation import insert_record
 import json
 import re
 app = Flask(__name__)
@@ -25,12 +26,12 @@ def delete():
     return 'Row affected: %s' % row_affected
 
 @app.route('/insert', methods=['POST'])
-def delete():
+def insert():
     data = request.get_json()
 
     table = data['table']
-    operations = tuple(data['operations'])
+    value = tuple(data['value'])
 
-    row_affected = delete_record(table, *operations)
+    row_affected = insert_record(table, *value)
 
     return 'Row affected: %s' % row_affected

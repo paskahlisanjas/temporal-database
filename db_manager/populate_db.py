@@ -41,5 +41,6 @@ print('Table `title` has been created.')
 insert_csv(SALARY_DIR, SALARY_TABLE)
 insert_csv(TITLE_DIR, TITLE_TABLE)
 
+db.commit()
 db.close()
 print('---------------------- DONE :)')
