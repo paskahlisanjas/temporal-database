@@ -35,3 +35,37 @@ def insert():
     row_affected = insert_record(table, *value)
 
     return 'Row affected: %s' % row_affected
+
+@app.route('/')
+def index():
+  return render_template('index.html')
+
+@app.route('/update', methods=['POST'])
+def update():
+  data = request.get_json()
+
+  table = data['table']
+  operations = tuple(data['operations'])
+
+  update_operation(table, *operations)
+
+  return 'jsonify(salaries)'
+
+@app.route('/union', methods=['POST'])
+def union():
+  data = request.get_json()
+
+  table = data['table']
+  operations = tuple(data['operations'])
+
+  update_operation(table, *operations)
+
+  return 'jsonify(salaries)'
+
+@app.route('/before', methods=['POST','GET'])
+def before():
+  data = request.get_json()
+  input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+  input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+  return str(is_before(input0,input1))
