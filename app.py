@@ -20,6 +20,17 @@ def delete():
     table = data['table']
     operations = tuple(data['operations'])
 
-    delete_record(table, *operations)
+    row_affected = delete_record(table, *operations)
 
-    return 'jsonify(salaries)'
+    return 'Row affected: %s' % row_affected
+
+@app.route('/insert', methods=['POST'])
+def delete():
+    data = request.get_json()
+
+    table = data['table']
+    operations = tuple(data['operations'])
+
+    row_affected = delete_record(table, *operations)
+
+    return 'Row affected: %s' % row_affected

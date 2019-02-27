@@ -19,4 +19,7 @@ def delete_record(table_name, *args):
         raise 'Invalid table name: %s' % table_name
     query = build_query(table_name, *args)
     db.execute_sql(query)
+    row_count = db.row_count()
+    db.commit()
     print('[executed] ', query)
+    return row_count
