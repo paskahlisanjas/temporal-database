@@ -50,13 +50,33 @@ def is_starts(x,y):
 def is_started_by(x,y):
   return is_starts(y,x)
 
-def is_finishes(x,y):
-    return (x.valid_from > y.valid_from
-        and x.valid_from < y.valid_to
-        and x.valid_to > y.valid_from
-        and x.valid_to == y.valid_to)
-  )
+def is_meets(x,y):
+    return(x.start < y.start
+        and x.start < y.finish
+        and x.finish == y.start
+        and x.finish < y.finish
+    )
 
-def finished_by(x,y):
+def is_met_by(x,y):
+    return is_meets(y,x)
+
+
+def is_overlaps(x,y):
+    return(x.start <= y.start
+        and x.start < y.finish
+        and x.finish > y.start
+        and x.finish <= y.finish
+    )
+
+def is_overlapped_by(x,y):
+    return is_overlaps(y,x)
+
+def is_finishes(x,y):
+    return(x.start > y.start
+        and x.start < y.finish
+        and x.finish > y.start
+        and x.finish == y.finish
+    )
+
+def is_finished_by(x,y):
     return is_finishes(y,x)
-  }

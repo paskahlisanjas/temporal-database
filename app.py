@@ -7,7 +7,6 @@ from db_manager.insert_operation import insert_record
 from allen.allen import ValidInterval
 from allen.allen import *
 import json
-import re
 app = Flask(__name__)
 
 from db_manager.db_manager import Database
@@ -37,6 +36,10 @@ def insert():
     row_affected = insert_record(table, *value)
 
     return 'Row affected: %s' % row_affected
+
+@app.route('/')
+def index():
+  return render_template('index.html')
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -131,3 +134,54 @@ def finishedby():
   input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
 
   return str(is_finished_by(input0,input1))
+
+@app.route('/meets', methods=['POST'])
+def meets():
+    data = request.get_json()
+    input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+    input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+    return str(is_meets(input0,input1))
+
+@app.route('/met_by', methods=['POST'])
+def met_by():
+    data = request.get_json()
+    input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+    input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+    return str(is_met_by(input0,input1))
+
+
+@app.route('/overlaps', methods=['POST'])
+def overlaps():
+    data = request.get_json()
+    input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+    input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+    return str(is_overlaps(input0,input1))
+
+
+@app.route('/overlapped_by', methods=['POST'])
+def overlapped_by():
+    data = request.get_json()
+    input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+    input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+    return str(is_overlapped_by(input0,input1))
+
+
+@app.route('/finishes', methods=['POST'])
+def finishes():
+    data = request.get_json()
+    input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+    input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+    return str(is_finishes(input0,input1))
+
+@app.route('/finished_by', methods=['POST'])
+def finished_by():
+    data = request.get_json()
+    input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+    input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+    return str(is_finished_by(input0,input1))
