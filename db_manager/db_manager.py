@@ -16,11 +16,16 @@ class Database:
 
     def execute_sql(self, query):
         self.cursor.execute(query)
-        self.database.commit()
 
-    def fetch_all(arg):
+    def fetch_all(self):
         return self.cursor.fetchall()
 
     def close(self):
         self.cursor.close()
         self.database.close()
+
+    def commit(self):
+        self.database.commit()
+
+    def row_count(self):
+        return self.cursor.rowcount
