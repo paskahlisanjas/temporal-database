@@ -37,7 +37,6 @@ def is_during(x,y):
 
 def is_contains(x,y):
     return is_during(y,x)
-  )
 
 def is_starts(x,y):
   return (x.start == y.start
