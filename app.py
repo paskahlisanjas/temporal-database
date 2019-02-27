@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import jsonify
 from flask import request
+from db_manager.delete_operation import delete_record
 import json
 import re
 app = Flask(__name__)
@@ -16,15 +17,9 @@ def index():
 def delete():
     data = request.get_json()
 
-    db = Database()
-    db.execute_sql('SELECT * FROM salary')
-    salaries = db.fetch_all()
+    table = data['table']
+    operations = tuple(data['operations'])
 
-    # db.execute_sql('SELECT * FROM title')
-    # titles = db.fetch_all()
-    # return render_template(
-    #     'delete.html',
-    #     salaries=salaries,
-    #     titles=titles
-    # )
-    return jsonify(salaries)
+    delete_record(table, *operations)
+
+    return 'jsonify(salaries)'
