@@ -1,5 +1,5 @@
 import psycopg2
-from config import *
+from db_manager.config import *
 
 class Database:
     def __init__(self):
