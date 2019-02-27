@@ -13,7 +13,17 @@ class ValidInterval:
             self.finish = finish
 
 def is_before(x,y):
-  return (x.start < y.start
-            and x.start < y.finish
-            and x.finish < y.start
-            and x.finish < y.finish)
+    return (x.start < y.start
+        and x.start < y.finish
+        and x.finish < y.start
+        and x.finish < y.finish)
+
+def is_after(x,y):
+    return is_before(y,x)
+
+def is_equals(x,y):
+    return (x.start == y.start
+        and x.start < x.finish
+        and x.finish > y.start
+        and x.finish == y.finish
+    )
