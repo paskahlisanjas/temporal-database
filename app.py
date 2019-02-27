@@ -38,10 +38,6 @@ def insert():
 
     return 'Row affected: %s' % row_affected
 
-@app.route('/')
-def index():
-  return render_template('index.html')
-
 @app.route('/update', methods=['POST'])
 def update():
   data = request.get_json()
