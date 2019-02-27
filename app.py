@@ -1,64 +1,46 @@
-from models import UpdateForm, UnionForm
 from flask import Flask
-from flask import render_template, flash, redirect, url_for, request
-from db_manager.db_manager import Database
-from db_manager.config import Config
-import psycopg2
-import psycopg2.extras
+from flask import render_template
+from flask import jsonify
+from flask import request
+from allen.allen import ValidInterval
+from allen.allen import *
 import json
-
+import re
 app = Flask(__name__)
-app.config.from_object(Config)
+
+from db_manager.db_manager import Database
 
 db = Database()
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-@app.route('/update_form', methods=['GET'])
-def updateform():
-    salary = db.execute_sql('SELECT * FROM salary;')
-    salary = db.fetch_all()
-    querry = UpdateForm()
-    # if querry.validate_on_submit():
-    #   flash('UPDATE {} SET {} WHERE {}'.format(
-    #           querry.table.data, querry.values.data, querry.condition.data))
-    #   return render_template('update.html', salary = salary, querry = querry)
-    return render_template('update.html', salary = salary, querry = querry)
+  return render_template('index.html')
 
 @app.route('/update', methods=['POST'])
 def update():
-  salary = db.execute_sql('SELECT * FROM salary;')
-  salary = db.fetch_all()
-  querry = UpdateForm()
-  if querry.validate_on_submit():
-    db.execute_sql('{}'.format(querry.update.data))
-    flash('{}'.format(querry.update.data))
-    return render_template('update.html', salary = salary, querry = querry)
+  data = request.get_json()
 
-@app.route('/union_form', methods=['GET'])
-def unionform():
-  union = UnionForm()
-  return render_template('union.html', union = union)
+  table = data['table']
+  operations = tuple(data['operations'])
+
+  update_operation(table, *operations)
+
+  return 'jsonify(salaries)'
 
 @app.route('/union', methods=['POST'])
 def union():
-  union = UnionForm()
-  if union.validate_on_submit():
-    result_union = db.execute_sql('SELECT {} FROM {} UNION (SELECT {} FROM {})'.format(
-      union.select1.data,union.table1.data,union.select2.data,union.table2.data))
-    result_union = db.fetch_all()
-    return render_template('result_union.html', result_union = result_union)
+  data = request.get_json()
 
-@app.route('/cobaupdate', methods=['POST'])
-def cobaupdate():
-    data = request.get_json(silent=True)
+  table = data['table']
+  operations = tuple(data['operations'])
 
-    table = data['table']
-    updated_values = data['values']
-    update_condition = data['condition']
+  update_operation(table, *operations)
 
-    # res = db.update(table, updated_values, update_condition)
-    
+  return 'jsonify(salaries)'
 
-    return json.dumps(res)
+@app.route('/before', methods=['POST','GET'])
+def before():
+  data = request.get_json()
+  input0 = ValidInterval(data['values'][0]['start'], data['values'][0]['finish'])
+  input1 = ValidInterval(data['values'][1]['start'], data['values'][1]['finish'])
+
+  return str(is_before(input0,input1))
