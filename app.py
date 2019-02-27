@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import jsonify
 from flask import request
+from db_manager.time_slice_operation import time_slice_query
 from db_manager.delete_operation import delete_record
 from db_manager.insert_operation import insert_record
 from allen.allen import ValidInterval
@@ -48,6 +49,16 @@ def update():
   update_operation(table, *operations)
 
   return 'jsonify(salaries)'
+
+@app.route('/time-slice', methods=['POST'])
+def time_slice():
+  data = request.get_json()
+  table = data['table']
+  time = data['time']
+
+  result = time_slice_query(table, time)
+  print(result)
+  return jsonify(result)
 
 @app.route('/union', methods=['POST'])
 def union():
