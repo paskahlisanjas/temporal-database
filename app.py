@@ -6,6 +6,7 @@ from db_manager.time_slice_operation import time_slice_query
 from db_manager.delete_operation import delete_record
 from db_manager.insert_operation import insert_record
 from db_manager.select_operation import select_record
+from db_manager.projection_operation import project_record
 from allen.allen import ValidInterval
 from allen.allen import *
 import json
@@ -69,6 +70,17 @@ def select():
     operations = tuple(data['operations'])
 
     result = select_record(table, *operations)
+    return jsonify(result)
+
+@app.route('/projection', methods=['POST'])
+def projection():
+    data = request.get_json()
+
+    table = data['table']
+    columns = data['columns']
+    operations = tuple(data['operations'])
+
+    result = project_record(table, columns, *operations)
     return jsonify(result)
 
 @app.route('/union', methods=['POST'])
