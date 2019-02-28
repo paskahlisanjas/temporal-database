@@ -2,13 +2,17 @@ from flask import Flask
 from flask import render_template
 from flask import jsonify
 from flask import request
+
 from db_manager.time_slice_operation import time_slice_query
 from db_manager.delete_operation import delete_record
 from db_manager.insert_operation import insert_record
 from db_manager.select_operation import select_record
 from db_manager.projection_operation import project_record
+from db_manager.update_operation import update_record
+
 from allen.allen import ValidInterval
 from allen.allen import *
+
 import json
 import re
 app = Flask(__name__)
@@ -47,10 +51,11 @@ def update():
 
   table = data['table']
   operations = tuple(data['operations'])
+  update = data['update']
 
-  update_operation(table, *operations)
+  result = update_record(table, update, *operations)
 
-  return 'jsonify(salaries)'
+  return 'Row affected: %s' % result
 
 @app.route('/time-slice', methods=['POST'])
 def time_slice():
